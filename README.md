@@ -1,5 +1,6 @@
 # himonoco_bookmaker
-ひものこ用ブックメーカーです
+ひものこ用ブックメーカーです。<br>
+Djangoで書かれています。
 
 ## 使い方（Windowsの場合）
 1. pythonをインストール
