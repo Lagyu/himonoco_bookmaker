@@ -1,0 +1,17 @@
+# [START runtime]
+runtime: python37
+entrypoint: gunicorn -b :$PORT himonoco.wsgi:application
+handlers:
+
+- url: /static
+  static_dir: static/
+- url: /.*
+  script: auto
+
+
+automatic_scaling:
+    min_idle_instances: automatic
+    max_idle_instances: 1
+    min_pending_latency: 2000ms
+    max_pending_latency: automatic
+# [END runtime]
