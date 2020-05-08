@@ -35,7 +35,7 @@ class Spectator(models.Model):
         return self.name
 
     def points(self, event: Event):
-        expectations = Expectation.objects.filter(game__event=event, spectator=self)
+        expectations = Expectation.objects.filter(game__event=event, spectator=self).select_related("game__winner").select_related("expected_winner")
         current_sum = sum([expectation.calc_point() for expectation in expectations])
         return current_sum
 

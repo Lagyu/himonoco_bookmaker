@@ -21,17 +21,19 @@ class GamesListView(ListView):
 
     def get_queryset(self):
         event = Event.objects.get(id=self.kwargs["event"])  # type: Event
-        return Game.objects.filter(event=event)
+        return Game.objects.filter(event=event).select_related("event").select_related("winner")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # ここsqliteだとdistinctが動作しない
-        distinct_spectators = Spectator.objects.filter(expectation__game__event=Event.objects.get(id=self.kwargs["event"])).distinct()
+        event = Event.objects.get(id=self.kwargs["event"])
+        distinct_spectators = Spectator.objects.filter(expectation__game__event=event).distinct()
         ordered_distinct_spectators = sorted(distinct_spectators,
-                                             key=lambda x: x.points(event=Event.objects.get(id=self.kwargs["event"])),
+                                             key=lambda x: x.points(event=event),
                                              reverse=True)
         context['spectators'] = ordered_distinct_spectators
+        context["event"] = event
         return context
 
 

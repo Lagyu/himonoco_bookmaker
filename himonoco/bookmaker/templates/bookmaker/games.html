@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <h1>
-        {{ object_list.first.event.name }}
+        {{ event.name }}
     </h1>
     <table class="table">
         {% for game in object_list %}
@@ -54,7 +54,7 @@
                     {{ spectator.name }}
                 </td>
                 <td>
-                    {% call_method spectator "points" object_list.first.event %}点
+                    {% call_method spectator "points" event %}点
                 </td>
                 <td>
                     あとで作る
